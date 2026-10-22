@@ -25,9 +25,11 @@ public class FrenchNameBuilderTest : BaseNameBuilderTest
     [TestCase("Fish", new string[] { "Nageoires", "Blanc", "Poisson" }, "Poisson aux nageoires blanches")]   // A name and two adjectives
     [TestCase("Fish", new string[] { "Poisson", "Doré", "Dos" }, "Poisson à dos doré")]
     [TestCase("Fish", new string[] { "Poisson", "Écailles", "Tacheté" }, "Poisson aux écailles tachetées")]
-    [TestCase("Fish", new string[] { "Tacheté", "Doré", "Blanc" }, "À tâches blanches et dorées")] // Three adjectives
-    [TestCase("Fish", new string[] { "Doré", "Tacheté", "Blanc" }, "Doré à tâches blanches")] // Three adjectives
-    [TestCase("Fish", new string[] { "Blanc", "Doré", "Tacheté" }, "Blanc à tâches dorées")] // Three adjectives
+    
+    // Only adjectives : will look up for the first adjective usable as a noun. Only 'tacheté' in our case. 
+    [TestCase("Fish", new string[] { "Tacheté", "Doré", "Blanc" }, "Taches blanches et dorées")]
+    [TestCase("Fish", new string[] { "Doré", "Tacheté", "Blanc" }, "Taches dorées et blanches")]
+    [TestCase("Fish", new string[] { "Blanc", "Doré", "Tacheté" }, "Taches blanches et dorées")]
     
     [TestCase("Fish", new string[] { "Nageoires", "Écailles" }, "Nageoires et écailles")]
     [TestCase("Fish", new string[] { "Nageoires", "Écailles", "Doré" }, "Nageoires et écailles dorées")] 
@@ -42,9 +44,7 @@ public class FrenchNameBuilderTest : BaseNameBuilderTest
     // - "Dreamer", "Dreaming carp" : rêveur, carpe rêveuse
     
     /* TODO:
-     * - Introduce 'et' instead of 'aux', except in first position
-     * - Add exception for "à tâches" instead of "tacheté" (use adjective as noun and it will affect next adjectives)
-     * - "Fish_Adj_as_noun_X" : I suppose it was a workaround when only adjectives were used. Might not be needed anymore.
+     * - Fix "only adjectives" case where some adjectives are used as nouns
      */
     public void FrenchNameBuilderFish(string animalName, string[] inputWords, string expectedName)
     {

@@ -74,22 +74,23 @@ namespace AnimalNameBuilder
             Debug.Log("Reverting to '" + nameBit.word + "' as the name bit");            
         }
 
-        protected virtual string GetJoiningWord()
+        // Word to insert between two consecutive words of the name (null for none)
+        protected virtual string GetJoiningWord(NameAnimal.NameSuggestion previous, NameAnimal.NameSuggestion next)
         {
             return null;
         }
 
-        protected void ExtractAdjectives(NameAnimal namer, List<NameAnimal.NameSuggestion> sorted, List<NameAnimal.NameSuggestion> sortedNames, ref List<string> words, ref List<int> wordIndices)
+        // 'previous' is the word already placed just before the adjectives, if any (e.g. the name in French)
+        protected void ExtractAdjectives(NameAnimal namer, List<NameAnimal.NameSuggestion> sorted, List<NameAnimal.NameSuggestion> sortedNames, ref List<string> words, ref List<int> wordIndices, NameAnimal.NameSuggestion previous = null)
         {
-            bool hasInsertedAdjective = false;
             for (int j = 0; j < sorted.Count; j++)
             {
                 NameAnimal.NameSuggestion suggestion = sorted[j];
                 if (sortedNames.Contains(suggestion)) continue;
 
-                if (hasInsertedAdjective)
+                if (previous != null)
                 {
-                    string joiningWord = GetJoiningWord();
+                    string joiningWord = GetJoiningWord(previous, suggestion);
                     if (joiningWord != null)
                     {
                         words.Add(joiningWord);
@@ -102,7 +103,7 @@ namespace AnimalNameBuilder
                 words.Add(word);
                 wordIndices.Add(suggestion.selectedWordIndex);
 
-                if (suggestion.wordType == 0) hasInsertedAdjective = true;
+                previous = suggestion;
             }
         }
 

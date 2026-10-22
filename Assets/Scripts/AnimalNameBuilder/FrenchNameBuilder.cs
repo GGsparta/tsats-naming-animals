@@ -13,10 +13,15 @@ namespace AnimalNameBuilder
             kFemininePlural
         };
 
-        protected EnumGender genderIndex;       
-        
+        protected EnumGender genderIndex;
+
+        // Adjective turned into a noun to serve as the name, if there was no actual name
+        protected NameAnimal.NameSuggestion adjectiveUsedAsName;
+
         public override void GenerateName(NameAnimal namer, List<NameAnimal.NameSuggestion> selectedElements, ref List<string> words, ref List<int> wordIndices)
         {
+            adjectiveUsedAsName = null;
+
             // Sort our chosen words by type, because it tends to produce nicer results
             List<NameAnimal.NameSuggestion> sorted = new List<NameAnimal.NameSuggestion>(selectedElements);
             sorted.Sort((s, t) => CompareNameElementsFR(s, t));            
@@ -38,7 +43,8 @@ namespace AnimalNameBuilder
 
             // Now use all of the remaining words,        
             // sorted into word type order, because it tends to produce nicer results
-            ExtractAdjectives(namer, sorted, sortedNames, ref words, ref wordIndices);            
+            NameAnimal.NameSuggestion lastPlacedName = sortedNames.Count > 0 ? sortedNames[sortedNames.Count - 1] : null;
+            ExtractAdjectives(namer, sorted, sortedNames, ref words, ref wordIndices, lastPlacedName);
         }
 
         protected override void UseOtherWordAsName(NameAnimal namer, ref List<NameAnimal.NameSuggestion> sortedNames, ref List<NameAnimal.NameSuggestion> sorted)
@@ -50,15 +56,46 @@ namespace AnimalNameBuilder
             {
                 // Look up a special translation to help us turn it into name form
                 nameBit.word = namer.GenerateSuggestion("Adj_as_noun", nameBit.suggestionIndex);
+                adjectiveUsedAsName = nameBit;
             }
 
             sortedNames.Add(nameBit);
             Debug.Log("Reverting to '" + nameBit.word + "' as the name bit");
         }
 
-        protected override string GetJoiningWord()
+        protected override string GetJoiningWord(NameAnimal.NameSuggestion previous, NameAnimal.NameSuggestion next)
         {
-            return "et";
+            //{ "Adjective", "Noun", "Verb", "Name" }
+            int previousType = previous.wordType;
+            if (previous == adjectiveUsedAsName)
+            {
+                // An adjective used as the name has been turned into a noun (e.g. "Taches")
+                previousType = 1;
+            }
+
+            if (next.wordType == 1)
+            {
+                switch (previousType)
+                {
+                    case 3: return Preposition(next);
+                    case 1: return "et";
+                    case 0: return "et " + Preposition(next);
+                }
+            }
+            else if (next.wordType == 0 && previousType == 0)
+            {
+                return "et";
+            }
+
+            return null;
+        }
+
+        // "à" or "aux" depending on whether the noun is singular or plural
+        protected string Preposition(NameAnimal.NameSuggestion noun)
+        {
+            EnumGender gender = DetermineGenderFromName(noun);
+            bool isPlural = (gender == EnumGender.kMasculinePlural) || (gender == EnumGender.kFemininePlural);
+            return isPlural ? "aux" : "à";
         }
 
         protected int CompareNameElementsFR(NameAnimal.NameSuggestion s, NameAnimal.NameSuggestion t)
@@ -128,7 +165,7 @@ namespace AnimalNameBuilder
         protected override string NameFromSuggestion(NameAnimal.NameSuggestion suggestion)
         {
             // Start with the default form
-            string name = suggestion.word;                        
+            string name = suggestion.word;            
 
             // A : might be used to indicate word gender
             string[] bits = name.Split(":", 2);
@@ -143,6 +180,9 @@ namespace AnimalNameBuilder
                 // If it's a noun, we will actually use THIS to determine the gender,
                 // not the original name
                 genderIndex = DetermineGenderFromName(suggestion);
+
+                // The joining word already provides "à"/"aux", so use the noun as-is
+                return NameFromSuggestion(suggestion);
             }
 
             string adj = base.AdjectiveFromSuggestion(namer, suggestion);

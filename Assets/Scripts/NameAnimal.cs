@@ -30,6 +30,10 @@ public class NameAnimal : MonoBehaviour
     */
     public class NameSuggestion
     {
+        /// <summary>
+        /// 0:"Adjective" //  1:"Noun" // 2:"Verb" // 3:"Name"
+        /// </summary>
+        /// <remarks>Could be an enum @AndyGeers ?</remarks>
         public int wordType;
         public int suggestionIndex;
         public int selectedWordIndex;
@@ -165,10 +169,19 @@ public class NameAnimal : MonoBehaviour
     {
         LocalizedString localized = new LocalizedString();
         localized.TableReference = "AnimalNames";
-        localized.TableEntryReference = animalName + "_" + typePrefix + "_" + index;
+        localized.TableEntryReference = $"{animalName}_{typePrefix}_{index}";
         Debug.Log("Picking suggestion with key " + localized.TableEntryReference);            
         return localized.GetLocalizedString();            
-    }    
+    }
+    
+    public bool HasSuggestion(string typePrefix, int index)
+    {
+        LocalizedString localized = new LocalizedString();
+        localized.TableReference = "AnimalNames";
+        localized.TableEntryReference = $"{animalName}_{typePrefix}_{index}";
+        return localized.GetLocalizedString() != null;
+    }
+
     /*
     private bool UsedAlready(NameSuggestion suggestion)
     {
