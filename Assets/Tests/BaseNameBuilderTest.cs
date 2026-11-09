@@ -95,6 +95,8 @@ public abstract class BaseNameBuilderTest
                 string firstSuggestion = nameBuilder.LabelForSuggestion(allWords[0]);
                 throw new Exception($"No suggestion found for word {words[i]} - probably an issue with your test case. First suggestion is {firstSuggestion}");
             }
+            
+            suggestion.selectedAt = i; // Simulate order of selection
             selectedElements.Add(suggestion);
         }
         return selectedElements;

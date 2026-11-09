@@ -18,13 +18,14 @@ namespace AnimalNameBuilder
         // Adjective turned into a noun to serve as the name, if there was no actual name
         protected NameAnimal.NameSuggestion adjectiveUsedAsName;
 
-        public override void GenerateName(NameAnimal namer, List<NameAnimal.NameSuggestion> selectedElements, ref List<string> words, ref List<int> wordIndices)
+        public override void GenerateName(NameAnimal namer, List<NameAnimal.NameSuggestion> selectedElements,
+            ref List<string> words, ref List<int> wordIndices)
         {
             adjectiveUsedAsName = null;
 
             // Sort our chosen words by type, because it tends to produce nicer results
             List<NameAnimal.NameSuggestion> sorted = new List<NameAnimal.NameSuggestion>(selectedElements);
-            sorted.Sort((s, t) => CompareNameElementsFR(s, t));            
+            sorted.Sort((s, t) => CompareNameElementsFR(s, t));
 
             // Pull out all 'name'-type words
             List<NameAnimal.NameSuggestion> sortedNames = ExtractNameTypeWords(namer, selectedElements, ref sorted);
@@ -39,28 +40,51 @@ namespace AnimalNameBuilder
             }
 
             // In French the name needs to go BEFORE the adjectives
-            AppendNames(sortedNames, ref words, ref wordIndices);            
+            AppendNames(sortedNames, ref words, ref wordIndices);
 
             // Now use all of the remaining words,        
             // sorted into word type order, because it tends to produce nicer results
-            NameAnimal.NameSuggestion lastPlacedName = sortedNames.Count > 0 ? sortedNames[sortedNames.Count - 1] : null;
+            NameAnimal.NameSuggestion lastPlacedName =
+                sortedNames.Count > 0 ? sortedNames[sortedNames.Count - 1] : null;
             ExtractAdjectives(namer, sorted, sortedNames, ref words, ref wordIndices, lastPlacedName);
         }
 
-        protected override void UseOtherWordAsName(NameAnimal namer, ref List<NameAnimal.NameSuggestion> sortedNames, ref List<NameAnimal.NameSuggestion> sorted)
-        {            
-            NameAnimal.NameSuggestion nameBit = sorted[0];
-
-            // See if it's an adjective
-            if (nameBit.wordType == 0)
+        protected override void UseOtherWordAsName(NameAnimal namer, ref List<NameAnimal.NameSuggestion> sortedNames,
+            ref List<NameAnimal.NameSuggestion> sorted)
+        {
+            for (int i = 0; i < sorted.Count; i++)
             {
-                // Look up a special translation to help us turn it into name form
-                nameBit.word = namer.GenerateSuggestion("Adj_as_noun", nameBit.suggestionIndex);
-                adjectiveUsedAsName = nameBit;
-            }
+                NameAnimal.NameSuggestion nameBit = sorted[i];
 
-            sortedNames.Add(nameBit);
-            Debug.Log("Reverting to '" + nameBit.word + "' as the name bit");
+                switch (nameBit.wordType)
+                {
+                    // See if it's an adjective
+                    case 0:
+                    {
+                        // Look if this adjective could be used as a noun
+                        if (namer.HasSuggestion("Adj_as_noun", nameBit.suggestionIndex))
+                        {
+                            // Look up a special translation to help us turn it into name form
+                            nameBit.word = namer.GenerateSuggestion("Adj_as_noun", nameBit.suggestionIndex);
+                            nameBit.wordType = 1;
+                            adjectiveUsedAsName = nameBit;
+                    
+                            sortedNames.Add(nameBit);
+                            Debug.Log("Reverting to '" + nameBit.word + "' as the name bit");
+                            return;
+                        }
+
+                        break;
+                    }
+                    case 1:
+                        sortedNames.Add(nameBit);
+                        Debug.Log("Reverting to '" + nameBit.word + "' as the name bit");
+                        return;
+                }
+            }
+            
+            sortedNames.Add(sorted[0]);
+            Debug.LogWarning("Failed to find a proper word. Reverting to '" + sorted[0].word + "' as the name bit");
         }
 
         protected override string GetJoiningWord(NameAnimal.NameSuggestion previous, NameAnimal.NameSuggestion next)
@@ -112,6 +136,7 @@ namespace AnimalNameBuilder
             {
                 t1 = 1;
             }
+
             if (t2 == 1)
             {
                 t2 = 0;
@@ -165,7 +190,7 @@ namespace AnimalNameBuilder
         protected override string NameFromSuggestion(NameAnimal.NameSuggestion suggestion)
         {
             // Start with the default form
-            string name = suggestion.word;            
+            string name = suggestion.word;
 
             // A : might be used to indicate word gender
             string[] bits = name.Split(":", 2);
@@ -187,10 +212,10 @@ namespace AnimalNameBuilder
 
             string adj = base.AdjectiveFromSuggestion(namer, suggestion);
             string[] bits = adj.Split(":", 4);
-            if (bits.Length < 2) return adj;            
-            
+            if (bits.Length < 2) return adj;
+
             // Return the correct form
-            return bits[(int)genderIndex];            
+            return bits[(int)genderIndex];
         }
     }
 }

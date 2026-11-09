@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 //using FMODUnity;
 using UnityEngine.Localization;
+
 //using UnityEngine.Events;
 //using UnityEngine.EventSystems;
 //using Lean.Touch;
@@ -174,12 +173,13 @@ public class NameAnimal : MonoBehaviour
         return localized.GetLocalizedString();            
     }
     
+    
     public bool HasSuggestion(string typePrefix, int index)
     {
-        LocalizedString localized = new LocalizedString();
-        localized.TableReference = "AnimalNames";
-        localized.TableEntryReference = $"{animalName}_{typePrefix}_{index}";
-        return localized.GetLocalizedString() != null;
+        // Seems like there is no better way to check if a translation exists :/
+        // Always make sure it compares to the beginning of the string in "No Translation Found Format" field of the
+        // Localization Settings.
+        return !GenerateSuggestion(typePrefix, index).StartsWith("No translation found for");
     }
 
     /*
@@ -228,7 +228,7 @@ public class NameAnimal : MonoBehaviour
                 words[i].Clear();
             }
         }
-    }    
+    }
 
     private void SelectWord(WordSuggestion word, NameSuggestion suggestion)
     {
@@ -239,7 +239,7 @@ public class NameAnimal : MonoBehaviour
         suggestion.selectedAt = Time.time;
 
         Debug.Log("Select word " + suggestion.word);
-        int removedIndex = -1;        
+        int removedIndex = -1;
         if (selectedElements.Count >= 3)
         {
             // FIFO remove one element to restrict the total number
@@ -261,7 +261,7 @@ public class NameAnimal : MonoBehaviour
         Vector3 uiPosition = Camera.main.ScreenToWorldPoint(wordToReplace.position);
 
         word.transform.DOMove(uiPosition, 0.5f);
-        word.Clear();          
+        word.Clear();
     }
 
     private void FloatAwayOldSelection(GameObject oldWord)
@@ -270,18 +270,18 @@ public class NameAnimal : MonoBehaviour
 
         // Find our canvas
         Canvas canvas = oldWord.transform.GetComponentInParent<Canvas>();
-        if (canvas == null) return;        
+        if (canvas == null) return;
 
         // Let's detach from its parent then float away
         oldWord.transform.SetParent(canvas.transform);
         TextMeshProUGUI text = oldWord.GetComponent<TextMeshProUGUI>();
         if (text == null) return;
-        
-        text.rectTransform.DOMoveY(-50.0f, 1.0f).SetRelative(true).        
+
+        text.rectTransform.DOMoveY(-50.0f, 1.0f).SetRelative(true).
             OnComplete(() => Destroy(oldWord));
 
-        // Fade out the text at the same time        
-        text.DOFade(0.0f, 1.0f);        
+        // Fade out the text at the same time
+        text.DOFade(0.0f, 1.0f);
     }
 
     private Transform BuildNameFromSelected(int removedIndex = -1)
@@ -296,7 +296,7 @@ public class NameAnimal : MonoBehaviour
                 Destroy(child.gameObject);
             }
             return null;
-        }        
+        }
 
         for (int idx = 0; idx < selectedElements.Count; idx ++)
         {
@@ -330,7 +330,7 @@ public class NameAnimal : MonoBehaviour
         Transform targetInsertPosition = null;
         i = 0;
         foreach (string word in words)
-        {            
+        {
             TextMeshProUGUI presenter = Instantiate(chosenNameElementPrefab, nameSoFarContainer.transform);
             presenter.text = word;
             presenter.name = "Choice " + word;
@@ -366,7 +366,7 @@ public class NameAnimal : MonoBehaviour
         nameSoFar = string.Join(" ", words);
 
         return targetInsertPosition;
-    }    
+    }
 
     private UnityAction<BaseEventData> GetWordTappedHandler(int index)
     {
@@ -384,7 +384,7 @@ public class NameAnimal : MonoBehaviour
         if (index >= selectedElements.Count) return;
 
         // Remove this word from the queue
-        selectedElements.RemoveAt(index);        
+        selectedElements.RemoveAt(index);
 
         // Refresh name
         BuildNameFromSelected();
@@ -402,7 +402,7 @@ public class NameAnimal : MonoBehaviour
 
         // Refresh name
         BuildNameFromSelected();
-    }    
+    }
 
     public void RemoveWord(WordSuggestion word)
     {
@@ -442,7 +442,7 @@ public class NameAnimal : MonoBehaviour
         {
             stateMachine.TryTriggerByLabel("Named");
             Firebase.Analytics.FirebaseAnalytics.LogEvent("animal_named", "name", nameSoFar);
-        }   
+        }
 
         if (animalActor != null) animalActor.TriggerAnimation("Celebrate");
 
@@ -465,8 +465,8 @@ public class NameAnimal : MonoBehaviour
                 UnityEvent onComplete = new UnityEvent();
                 onComplete.AddListener(openBook);
                 journalEntry.onComplete = onComplete;
-                
-                journalEntry.gameObject.SetActive(true);                
+
+                journalEntry.gameObject.SetActive(true);
             }
             else
             {
