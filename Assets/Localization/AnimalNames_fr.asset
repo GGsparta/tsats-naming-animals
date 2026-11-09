@@ -43,11 +43,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 608009445376
-    m_Localized: Vit dans l'eau
+    m_Localized: Aquatique:Aquatique:Aquatiques:Aquatiques
     m_Metadata:
       m_Items: []
   - m_Id: 662971604992
-    m_Localized: Grouille
+    m_Localized: "F\xE9cond:F\xE9conde:F\xE9conds:F\xE9condes"
     m_Metadata:
       m_Items: []
   - m_Id: 709851340800
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27033395519488
-    m_Localized: "qui r\xEAve"
+    m_Localized: qui grouille
     m_Metadata:
       m_Items: []
   - m_Id: 28053055987712
@@ -91,7 +91,231 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 691396403200
-    m_Localized: "R\xEAveur:R\xEAveuse"
+    m_Localized: "R\xEAveur:R\xEAveuse:R\xEAveurs:R\xEAveuses"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453781943279616
+    m_Localized: Brun:Brune:Bruns:Brunes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 756525555712
+    m_Localized: Colin:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27042459410432
+    m_Localized: "qui r\xEAve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453791510487040
+    m_Localized: Robuste:Robuste:Robustes:Robustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453760715907072
+    m_Localized: Solennel:Solennelle:Solennels:Solennelles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453828525219840
+    m_Localized: Cornes:FF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453852713771008
+    m_Localized: Laine:F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453863455383552
+    m_Localized: Poids:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453896309366784
+    m_Localized: Champs:MM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453918849556480
+    m_Localized: Jardin:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453927275913216
+    m_Localized: l'Est:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453962671644672
+    m_Localized: Brouteur:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453979817959424
+    m_Localized: "B\xEAte de somme:F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6453999501828096
+    m_Localized: "B\xE9tail:M"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454017835130880
+    m_Localized: "B\xEAte:F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454028039872512
+    m_Localized: "B\u0153uf:M"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454062600937472
+    m_Localized: qui broute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454083136249856
+    m_Localized: portant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454151797006336
+    m_Localized: Laineux:Laineuse:Laineux:Laineuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454161959804928
+    m_Localized: Lourd:Lourde:Lourds:Lourdes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496448
+    m_Localized: Brun:Brune:Bruns:Brunes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496449
+    m_Localized: Long:Longue:Longs:Longues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496450
+    m_Localized: Grand:Grande:Grands:Grandes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496451
+    m_Localized: Poils:MM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496452
+    m_Localized: Cou:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496453
+    m_Localized: Nez:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496454
+    m_Localized: Colline:F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496455
+    m_Localized: Terres:MM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496456
+    m_Localized: Paradis:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496457
+    m_Localized: Sauteur:F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496458
+    m_Localized: Cracheur:F
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496459
+    m_Localized: Vagabond:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496460
+    m_Localized: Lama:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496461
+    m_Localized: Alpaga:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496462
+    m_Localized: "Ch\xE8vre:F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496463
+    m_Localized: sautant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496464
+    m_Localized: crachant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496465
+    m_Localized: errant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496469
+    m_Localized: Vif:Vive:Vifs:Vives
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496470
+    m_Localized: "Color\xE9:Color\xE9e:Color\xE9s:Color\xE9es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496471
+    m_Localized: Majestueux:Majestueuse:Majestueux:Majestueuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496472
+    m_Localized: Nez:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496473
+    m_Localized: Fesses:FF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496474
+    m_Localized: Poils:MM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496475
+    m_Localized: Arbres:MM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496476
+    m_Localized: Eden:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496477
+    m_Localized: Jardin:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496478
+    m_Localized: Arboricole:Arboricole:Arboricoles:Arboricoles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496479
+    m_Localized: Grimpeur:Grimpeuse:Grimpeurs:Grimpeuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496480
+    m_Localized: Siffleur:Siffleuse:Siffleurs:Siffleuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496481
+    m_Localized: Singe:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496482
+    m_Localized: Primate:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496483
+    m_Localized: Chenapan:M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496484
+    m_Localized: qui vit dans les arbres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496485
+    m_Localized: grimpant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6454916955496486
+    m_Localized: sifflant
     m_Metadata:
       m_Items: []
   references:
